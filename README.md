@@ -18,11 +18,30 @@ Or install it yourself as:
 
     $ gem install winker_ai
 
+## Associated Gems
+
+    Winker
+    AmazonEchoJS
+
 ## Usage
+
+This gem was intended to be used with my AmazonEchoJS gem, but I made it modular enough that any text input should work.
+
+First you will need to configure some ENV variables
+
+    ENV['WINK_CLIENT_ID']
+    ENV['WINK_CLIENT_SECRET']
+    ENV['WINK_ACCESS_TOKEN']
+    ENV['WINK_REFRESH_TOKEN']
+    ENV['WINK_USERNAME']
+    ENV['WINK_PASSWORD']
+    ENV['WINK_ENDPOINT']
 
 to run winker_ai server
 
     winker_ai_start
+
+This starts up a sinatra server that listens on port 4567 for the /command?q=<alexa text string> and parses it for Winker commands.
 
 ## Contributing
 
