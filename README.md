@@ -41,7 +41,7 @@ to run winker_ai server
 
     winker_ai_start
 
-This starts up a sinatra server that listens on port 4567 for the /command?q=<alexa text string> and parses it for Winker commands.
+This starts up a sinatra server that listens on port 4567 for the /command?q=string and parses it for Winker commands.
 
 ## Contributing
 
