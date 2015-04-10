@@ -85,6 +85,7 @@ module WinkerAI
     when number && string.match(/(#{LIGHT_TRIGGERS.join("|")})/) && !devices.empty?
       puts "case 1"
       devices.each do |d|
+        puts "brightness: #{d.name} #{number}"
         d.brightness = number/100.0
       end
     when !number && (_match1 = string.match(/(#{LIGHT_TRIGGERS.join("|")})/)[1]) && !devices.empty?
