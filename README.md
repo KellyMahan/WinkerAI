@@ -36,6 +36,22 @@ First you will need to configure some ENV variables
     ENV['WINK_USERNAME']
     ENV['WINK_PASSWORD']
     ENV['WINK_ENDPOINT']
+    ENV['ECHO_SERVER_PORT'] #port that sinatra will run on
+    
+    here is an example of my ~/.bash_profile
+    
+    export WINK_CLIENT_ID="*******"
+    export WINK_CLIENT_SECRET="*******"
+    export WINK_ACCESS_TOKEN="********"
+    export WINK_REFRESH_TOKEN="********"
+    export WINK_USERNAME="email@domain.com"
+    export WINK_PASSWORD="*******"
+    export WINK_ENDPOINT="https://winkapi.quirky.com"
+
+    export ECHO_EMAIL="email@domain.com"
+    export ECHO_PASSWORD="**********"
+    export ECHO_SERVER_PORT="4567"
+    export ECHO_SERVER="http://localhost:$ECHO_SERVER_PORT/command"
 
 to run winker_ai server
 
