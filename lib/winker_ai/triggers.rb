@@ -101,10 +101,15 @@ module WinkerAI
         devices.each do |d|
           d.brightness = [d.brightness-0.25,0].max
         end
-      when _match2 = string.match(/turn.*(on|off)/)[1]
+      when _match2 = string.match(/turn.*\s(on|off)/)[1]
         puts "case 5"
         devices.each do |d|
-          d.send(_match2)
+          case _match2 
+          when "on"
+            d.on
+          when "off"
+            d.off
+          end
         end
       end
     when number && string.match(/(#{LIGHT_TRIGGERS.join("|")})/) && devices.empty?
@@ -125,10 +130,16 @@ module WinkerAI
         lights.each do |d|
           d.brightness = [d.brightness-0.25,0].max
         end
-      when _match2 = string.match(/turn (on|off)/)[1]
+      when _match2 = string.match(/turn.*\s(on|off)/)[1]
         puts "case 10"
         lights.each do |d|
-          d.send(_match2)
+          case _match2 
+          when "on"
+            d.on
+          when "off"
+            d.off
+          end
+            
         end
       end
     end
