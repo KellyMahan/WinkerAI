@@ -25,6 +25,7 @@ module WinkerAI
   # }
   
   LIGHT_TRIGGERS = %w(dim raise lower shut turn)
+  EGG_TRIGGERS = %w(eggs)
   
   NUMBERS_MODIFIER = {
     "twenty" => 20,
@@ -66,21 +67,45 @@ module WinkerAI
   }
   
   LIGHT_TYPES = %w(light_bulb)
+  EGG_TYPES = %w(eggtray)
   
   def self.check_for_trigger(string)
     case string
     when /(#{LIGHT_TRIGGERS.join("|")}).*lights{0,1}/
       puts "handling lights"
       handle_lights(string)
+    when /(#{EGG_TRIGGERS.join("|")})/
+      puts "handling eggs"
+      handle_eggs(string)
     else
       #do nothing
+    end
+  end
+  
+  def self.handle_eggs(string)
+    `osascript -e "set Volume 5"`
+    case string
+    when /eggs.*(going bad|close|soon)/
+      `say 'There are #{eggs.map(&:eggs_warning).flatten.count} eggs that are about to go bad.'`
+    when /eggs.*are (bad|past|expired)/
+      `say 'There are #{eggs.map(&:eggs_warning).flatten.count} eggs that are past the expiration date.'`
+    when /how many.*eggs/
+      `say 'There are #{eggs.sum(&:count)} eggs left.'`
+    when /eggs.*expire/
+      if days = eggs.map(&:days_left).sort.first
+        `say 'There are #{days} days left until your first egg expires.'`
+      else
+        `say 'There are no eggs left.'`
+      end
+    else
+      #do nothing didn't find the proper egg question
     end
   end
   
   def self.handle_lights(string)
     number = find_number(string)
     devices = $wink_groups.select{|d| string.match(/#{d.name}/i)}
-    devices = $wink_devices.select{|d| string.match(/#{d.name}/i)} if devices.empty?
+    devices = lights.select{|d| string.match(/#{d.name}/i)} if devices.empty?
     case 
     when number && string.match(/(#{LIGHT_TRIGGERS.join("|")})/) && !devices.empty?
       puts "case 1"
@@ -163,6 +188,10 @@ module WinkerAI
   
   def self.lights
     $wink_devices.select{|d| LIGHT_TYPES.include?(d.type)}
+  end
+  
+  def self.eggs
+    $wink_devices.select{|d| EGG_TYPES.include?(d.type)}
   end
   
   def self.setup
